@@ -1,0 +1,30 @@
+.page-home{
+  background-image: url("../images/Background.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.container.orderShisha{
+  color: rgb(254, 252, 224);
+  border-style: solid;
+  text-align: center;
+  max-width: 50%;
+  height: auto;
+  border-radius: 5px;
+  border-color: #fff;
+  border-width: 1px;
+  width: 20%;
+  height: 10%;
+  margin-left: -10%;
+  margin-top: -5%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: rgba(88, 51, 10, .7);
+}
+
+.container.orderShisha:hover{
+  border-color: rgb(255, 178, 83);
+  background-color: rgba(88, 51, 10, .8);
+}

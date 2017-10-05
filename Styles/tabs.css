@@ -1,0 +1,211 @@
+md-content {
+  background-color: transparent !important;
+}
+
+md-tabs[md-border-bottom] md-tabs-wrapper {
+    border-width: 0 0 1px;
+    border-style: none;
+}
+
+  md-content md-tabs {
+    background: #fff1d7;
+  /*border: 1px solid #e1e1e1; }*/}
+  md-content md-tabs md-tabs-wrapper {
+      background: #fff1d7; }
+  md-content h1:first-child {
+    margin-top: 0; }
+
+/*Shared between Flavour and head controllers*/
+.page-flavour,.page-flavour-back,
+.page-default,.page-default-back{
+  background-color: #fff1d7;
+}
+
+.progressBar{
+  height: 25px;
+  margin-top: 1em;
+}
+
+.selection{
+  text-align: center;
+  color: rgb(88, 51, 10);
+}
+
+.selectedContainer{
+  max-width: 75%;
+  height: 13%;
+  max-height: 13%;
+  margin-left: 12%;
+  display: inline-block;
+  text-align: center;
+}
+
+.container.selectedContainer img{
+  box-shadow: 0 4px 8px 0 rgba(88, 51, 10, .7);
+  transition: 0.3s;
+  max-width: 20%;
+  width: 17%;
+  height: 100%;
+  display: inline-block;
+  margin-left: 1em;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.container.selectedContainer img:hover{
+  box-shadow: 0 8px 16px 0 rgba(88, 51, 10, .75);
+}
+
+.repeatingLoop{
+  display: inline;
+  position: relative;
+}
+
+.repeatingLoop.ng-enter{
+  animation: fadein 0.4s both ease-in;
+}
+
+.repeatingLoop.ng-leave{
+  animation:fadeout 0.5s 1;
+}
+
+.close::before{
+  content: 'x';
+}
+.close{
+  position: absolute;
+  top: -225%;
+  right: .5em;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: red;
+}
+
+.close:hover{
+  background-color: white;
+}
+
+.price{
+  display: inline-block;
+  margin-left: -4em;
+  position: relative;
+}
+
+.howMuch{
+  /*position: absolute;*/
+  font-size: 4em;
+  color: rgb(88, 51, 10);
+}
+
+.totalCost{
+  position: absolute;
+  bottom: -1.4em;
+  right: 2.1em;
+  color: rgb(88, 51, 10);
+}
+
+
+
+
+
+.container.flavBox{
+  width: 80%;
+  height: 23em !important;
+  /*margin-top: 6em;*/
+  box-shadow: 0 4px 8px 0 rgba(88, 51, 10, .8);
+  transition: 0.3s;
+  background-color: #fff1d7;
+}
+
+.container.flavBox:hover{
+  box-shadow: 0 8px 16px 0 rgba(88, 51, 10, .85);
+}
+
+.flavContainer{
+  margin-bottom: 1.5em;
+  /*margin-left: 1em;*/
+  width: 24%;
+  height: 10em;
+  overflow: hidden;
+}
+
+.flavContainer img{
+  box-shadow: 3px 6px 8px 0 rgba(88, 51, 10, .7);
+  transition: 0.3s;
+  max-width: 100%;
+  height: auto;
+  border-radius: 2px;
+  display: block;
+}
+.flavContainer img:hover{
+  box-shadow: 5px 8px 8px 1px rgba(88, 51, 10, .75);
+}
+
+.flavContainer.ng-enter {
+  animation: fadein 3s;
+}
+
+.done{
+  margin-right: 2em;
+  position: absolute;
+  right: 5%;
+  bottom: 1%;
+  background-color: #66ff66;
+  height: 7em;
+  width: 7em;
+  text-align: center;
+  border-radius: 100%;
+  box-shadow: 2px 7px 10px 0 rgba(88, 51, 10, 1)
+}
+
+.done:hover{
+  /*background-color: white;*/
+}
+
+.done.ng-enter{
+  animation: fadein 1.4s both ease-in;
+}
+
+.done.ng-leave{
+  animation:fadeout 0.5s 1;
+}
+
+.gf{
+  margin-top: 0.45em;
+  font-size: 3.5em;
+  color: white;
+}
+
+
+.gfHover{
+  animation: spin .4s infinite linear;
+  /*color:#66ff66 !important;*/
+}
+
+
+
+
+.backButton{
+  position: absolute;
+  left: 2%;
+  top: 40%;
+  background-color: rgba(88, 51, 10,.75);
+  height: 7em;
+  width: 7em;
+  border-radius: 100%;
+  text-align: center;
+}
+
+.gf-back{
+  color: #fff1d7;
+  font-size: 4em;
+  margin-top: 0.34em;
+}
+
+.gf-back:hover{
+  /*color: rgba(88, 51, 10,.85);*/
+}
+
+.backButton:hover{
+  background-color: rgba(88, 51, 10,.9);
+}

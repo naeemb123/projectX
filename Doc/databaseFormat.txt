@@ -1,0 +1,23 @@
+Table column:
+
+<<standard pricing>>
+
+  <price>:<number of flavours limit>:<price increase if flavours chosen is beyond flavours limit>
+  example: 12.00:3:4.00 --> upto 3 flavours can be chosen at the price of £12.00. if more flavours chosen then there's
+                            an extra £4.00 charge
+
+<<special_pricing>>
+
+  <price>
+  example: 16.00 --> £16 for this flavour (e.g. blue mist, fruit burst etc ..)
+
+
+<<type in selection flavours>>
+
+    either: 'standard' or 'special' is accepted
+
+<<unavailable in cafe>>
+
+    either: 0 or 1
+    0 --> cafe is unavailable
+    1 --> cafe is available

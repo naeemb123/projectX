@@ -1,0 +1,89 @@
+/* ANIMATIONS
+============================================================================= */
+
+/* leaving animations ----------------------------------------- */
+/* rotate and fall */
+@keyframes rotateFall {
+    0%      { transform: rotateZ(0deg); }
+    20%     { transform: rotateZ(10deg); animation-timing-function: ease-out; }
+    40%     { transform: rotateZ(17deg); }
+    60%     { transform: rotateZ(16deg); }
+    100%    { transform: translateY(100%) rotateZ(17deg); }
+}
+
+/* slide in from the bottom */
+@keyframes slideOutLeft {
+    to      { transform: translateX(-100%); }
+}
+
+/* slide out from right */
+@@keyframes slideOutRight {
+  to { transform: translateX(100%); }
+}
+
+/* rotate out newspaper */
+@keyframes rotateOutNewspaper {
+    to      { transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
+}
+
+/* entering animations --------------------------------------- */
+/* scale up */
+@keyframes scaleUp {
+    from    { opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+
+/* slide in from the right */
+@keyframes slideInRight {
+    from    { transform:translateX(100%); }
+    to      { transform: translateX(0); }
+}
+
+/* slide in from the left */
+@@keyframes slideInLeft {
+    from { transform:translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* slide in from the bottom */
+@keyframes slideInUp {
+    from    { transform:translateY(100%); }
+    to      { transform: translateY(0); }
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes fadeout {
+  0% { opacity: 1;}
+  100% {opacity: 0;}
+}
+
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+ /* home -------------------------- */
+.page-home.ng-enter         { animation: scaleUp 0.5s both ease-in;z-index: 8888}
+.page-home.ng-leave         { transform-origin: 0% 0%; animation: rotateFall 1s both ease-in;z-index: 9999}
+
+ /* flavours -------------------------- */
+ .page-flavour.ng-enter        { animation:slideInRight .75s both ease-in; z-index: 8888}
+ .page-flavour.ng-leave        { animation:slideOutLeft 0.5s both ease-in; z-index: 9999}
+
+ /*.page-flavour-back.ng-enter  { animation:slideInLeft .5s both ease-in; z-index: 8888}*/
+ /*.page-flavour-back.ng-leave  { animation:slideOutLeft 0.5s both ease-in; z-index: 9999}*/
+
+
+.page-default.ng-enter        { animation:slideInRight 0.5s both ease-in; z-index: 8888}
+.page-default.ng-leave        { animation:slideOutLeft 0.5s both ease-in; z-index: 8888}
+
+/*.page-default-back.ng-enter { animation:slideInRight 0.5s both ease-in; z-index: 8888}*/
+/*.page-default-back.ng-leave { animation:slideOutRight 0.5s both ease-in; z-index: 8888}*/

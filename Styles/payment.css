@@ -1,0 +1,61 @@
+/*.whenToGetReady{
+  text-align: center;
+  font-size: 3.5em;
+  margin-right: 10%;
+  color: rgb(88, 51, 10);
+}*/
+
+.ready{
+  /*margin-top: 2% !important;*/
+  text-align: left !important;
+}
+
+.orderSummary{
+  max-width: 60% !important;
+  max-height: 10% !important;
+}
+
+#summary{
+  margin-left: 26% !important;
+}
+
+.price_payment{
+  margin-left: 5em !important;
+  position: absolute !important;
+}
+
+.totalCost_transaction{
+  font-size: 3em;
+  color: rgb(88, 51, 10);
+}
+
+.container.timeSelectBox{
+  margin-top: 8% !important;
+}
+
+.container.selectedContainer img {
+  margin-bottom: 2% !important;
+}
+
+/*Time picker CSS*/
+/*.md-button.md-icon-button {
+    margin: 0 6px;
+    height: 10em;
+    min-width: 0;
+    line-height: 24px;
+    padding: 8px;
+    width: 14em;
+    border-radius: 50%;
+    text-align: center;
+}*/
+
+md-icon.material-icons{
+  height: 87% !important;
+  margin-right: 0 !important;
+  margin-left: 40%;
+}
+
+i.material-icons{
+  /*font-size: 5em;*/
+  color: rgb(88, 51, 10);
+}

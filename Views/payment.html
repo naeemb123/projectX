@@ -1,0 +1,43 @@
+<img src="images/logo.png" height="60" width="60" id="logo">
+<uib-progressbar class="progressBar" animate="false" value="total" type="success"><b></b></uib-progressbar>
+<h1 class="selection">Your Selection:</h1>
+<div class="container selectedContainer ready orderSummary">
+  <span id="summary">Flavours:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+  <div class="repeatingLoop" ng-repeat="select in selectedFlavours">
+    <img class="selectedImg" ng-src="{{select.url}}">
+  </div>
+  <br>
+  <span id="summary">Head/Extras:</span>
+  <div class="repeatingLoop orderSummary" ng-repeat="select in selectedHeads">
+    <img class="selectedImg" ng-src="{{select.url}}">
+  </div>
+</div>
+<div class="price price_payment">
+  <h1 class="totalCost_transaction"><b>Total: {{ totalPrice | currency:'£'}}</b></h1>
+</div>
+<a href="#!head/">
+  <div class="backButton" ng-mouseover="changeColourOf_backButton()" ng-mouseleave="colourChange_backButton=''" ng-click="direction()">
+    <span class="gf-back glyphicon glyphicon-chevron-left {{colourChange_backButton}}"></span>
+  </div>
+</a>
+<div class="container flavBox card timeSelectBox" style="overflow-y: scroll; height:350px;">
+  <md-content class="flaTabs">
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Payment">
+        <md-content class="md-padding">
+          <div class="timePicker">
+            <md-time-picker ng-model="time.twelve" message="message"></md-time-picker>
+          </div>
+        </md-content>
+      </md-tab>
+      <!-- <md-tab label="Special"> -->
+        <md-content class="md-padding">
+
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>
+<a href="#!payment/"><div class="done" ng-show="timeSelected" ng-mouseover="changeColourOfGf()" ng-mouseleave="colourChange=''" ng-click="timeSelectSubmitted()">
+  <span class="gf glyphicon glyphicon-ok {{colourChange}}"></span>
+</div></a>

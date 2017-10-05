@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no,
+    initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
+    <title>Shisha Express</title>
+
+    <!-- CSS files !-->
+    <link rel="stylesheet" href="Vendor/angular-material/angular-material.min.css">
+    <link href="https://cdn.rawgit.com/classlinkinc/angular-material-time-picker/master/dist/md-time-picker.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="Vendor/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="Vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Styles/tabs.css" rel="stylesheet">
+    <link href="Styles/transitions.css" rel="stylesheet">
+    <link href="Styles/index.css" rel="stylesheet">
+    <link href="Styles/home.css" rel="stylesheet">
+    <link href="Styles/flavours.css" rel="stylesheet">
+    <link href="Styles/head.css" rel="stylesheet">
+    <link href="Styles/payment.css" rel="stylesheet">
+    <link href="Styles/completed.css" rel="stylesheet">
+    <link href="Styles/timePicker.css" rel="stylesheet">
+
+    <!--plugins -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script> -->
+    <script src="Vendor/angular/angular.js"></script>
+    <script src="Vendor/angular-route.js"></script>
+    <script src="Vendor/angular-material/angular-material.min.js"></script>
+    <script src="Vendor/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script src="Vendor/angular-animate/angular-animate.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script> -->
+    <script src="Vendor/angular-aria/angular-aria.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script> -->
+    <script src="Vendor/angular-messages/angular-messages.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-touch/1.6.6/angular-touch.min.js"></script> -->
+    <script src="Vendor/angular-touch/angular-touch.min.js"></script>
+    <script src="https://cdn.rawgit.com/classlinkinc/angular-material-time-picker/master/dist/md-time-picker.js"></script>
+
+    <!--Modules -->
+    <script src="js/app.js"></script>
+    <!--Controllers -->
+    <script src="js/Controllers/MainController.js"></script>
+    <script src="js/Controllers/FlavourController.js"></script>
+    <script src="js/Controllers/HeadsController.js"></script>
+    <script src="js/Controllers/PaymentController.js"></script>
+    <script src="js/Controllers/CompletedController.js"></script>
+
+    <!--Directives -->
+
+    <!--Services -->
+    <script src="js/Services/getFlavours.js"></script>
+    <script src="js/Services/getHeads.js"></script>
+    <script src="js/Services/cafeDetails.js"></script>
+    <script src="js/Services/TransactionInfo.js"></script>
+
+  </head>
+
+  <body ng-app="shishaApp" ng-cloak ng-controller="MainController">
+    <!-- <md-time-picker ng-model="time.twelve" message="message"></md-time-picker> -->
+  <div class="page {{pageClass}}" ng-view></div>
+  </body>
+
+</html>

@@ -1,0 +1,50 @@
+<img src="images/logo.png" height="60" width="60" id="logo">
+<uib-progressbar class="progressBar" animate="false" value="total" type="success"><b></b></uib-progressbar>
+<h1 class="selection">Your Selection:</h1>
+<div class="container selectedContainer">
+  <div class="repeatingLoop" ng-repeat="select in selected">
+    <img class="selectedImg" ng-src="{{select.url}}">
+    <span class="close" ng-click="removeFromSelected($index)"></span>
+  </div>
+</div>
+<div class="price">
+  <h1 class="howMuch"><b>{{ price | currency:'£'}}</b></h1>
+  <h5 class="totalCost">Total: {{totalCost | currency:'£'}}</h5>
+</div>
+<div class="chooseYourFlavours">
+  <h1 class="text">Choose your Head</h1>
+  <a href="#!flavours/">
+    <div class="backButton" ng-mouseover="changeColourOf_backButton()" ng-mouseleave="colourChange_backButton=''" ng-click="direction()">
+      <span class="gf-back glyphicon glyphicon-chevron-left {{colourChange_backButton}}"></span>
+    </div>
+  </a>
+  <div class="container flavBox card" style="overflow-y: scroll; height:350px;">
+    <md-content class="flaTabs">
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Heads">
+          <md-content class="md-padding">
+            <div class="row">
+              <div class="col-md-4 container card flavContainer" ng-repeat="head in heads">
+                <img class="flavImage" ng-src="{{head.url}}" ng-click="addToSelected(head,$index)">
+              </div>
+            </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="Extras">
+          <md-content class="md-padding">
+
+            <h1 ng-show="noExtras" class="noExtras">This Cafe does not provide any extras</h1>
+            <div class="row">
+              <div class="col-md-4 container card flavContainer" ng-repeat="extra in extras">
+                <img class="flavImage" ng-src="{{extra.url}}" ng-click="addToSelected_extra(extra)">
+              </div>
+            </div>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-content>
+  </div>
+</div>
+<a href="#!payment/"><div class="done" ng-show="headSelected" ng-mouseover="changeColourOfGf()" ng-mouseleave="colourChange=''" ng-click="flavourSubmitted()">
+  <span class="gf glyphicon glyphicon-ok {{colourChange}}"></span>
+</div></a>
