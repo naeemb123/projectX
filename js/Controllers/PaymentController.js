@@ -22,6 +22,13 @@ app.controller('PaymentController',['$scope','TransactionInfo','$mdpTimePicker',
     TransactionInfo.setDirectionOfTransaction("back");
   }
 
+  $scope.paymentSubmitted = function(){
+    TransactionInfo.setOrderPrice($scope.totalCost);
+    TransactionInfo.setHeadSelection($scope.selected);
+    TransactionInfo.setHeadTotal($scope.totalCost - $scope.price);
+    TransactionInfo.setDirectionOfTransaction("submit");
+  }
+
   $scope.time = {
       twelve: new Date(),
       twentyfour: new Date()
