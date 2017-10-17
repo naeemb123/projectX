@@ -1,9 +1,7 @@
 app.controller('PaymentController',['$scope','TransactionInfo','$mdpTimePicker',function($scope,TransactionInfo,$mdpTimePicker){
   $scope.pageClass = "page-default";
   $scope.total = 85;
-  console.log(TransactionInfo.getOrderPrice());
   $scope.totalPrice = parseInt(TransactionInfo.getOrderPrice());
-  console.log($scope.totalPrice);
   $scope.timeSelected = true;
   $scope.selectedFlavours = TransactionInfo.getFlavourSelection();
   $scope.selectedHeads = TransactionInfo.getHeadSelection();

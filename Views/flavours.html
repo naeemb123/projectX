@@ -18,15 +18,16 @@
     </div>
   </a>
   <h1 class="text">Choose your flavours</h1>
+  <!-- <h3 tooltips tooltip-template="Tool">Hello</h3> -->
   <div class="container flavBox card" style="overflow-y: scroll; height:350px;">
     <md-content class="flaTabs">
       <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="Standard">
           <md-content class="md-padding">
             <div class="row" ng-repeat="flavourList in splitImages_standard">
-              <div class="col-md-4 container card flavContainer" ng-repeat="flav in flavourList">
-                <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_standard(flav)">
-              </div>
+                <div class="col-md-4 container card flavContainer" ng-repeat="flav in flavourList">
+                  <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_standard(flav)">
+                </div>
             </div>
           </md-content>
         </md-tab>

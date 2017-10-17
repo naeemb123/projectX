@@ -4,22 +4,16 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
   $scope.noExtras = true;
   $scope.headSelected = false;
   $scope.price = TransactionInfo.getHeadPrice();
-  console.log(TransactionInfo.getHeadPrice());
-  console.log(TransactionInfo.getOrderPrice());
 
-  console.log(TransactionInfo.getDirectionOfTransaction());
-  console.log(TransactionInfo.getDirectionOfTransaction() == "submit");
   if (TransactionInfo.getDirectionOfTransaction() == "submit"){
       $scope.totalCost = TransactionInfo.getOrderPrice() + $scope.price;
   }else if(TransactionInfo.getDirectionOfTransaction() == "back"){$scope.totalCost = TransactionInfo.getheadTotal();}
-  console.log($scope.totalCost);
+
+
   $scope.selected=TransactionInfo.getHeadSelection();
   if ($scope.selected.length !=0){
     $scope.headSelected=true;
-    console.log("Price: "+$scope.price);
-    console.log($scope.selected);
     for (var itemIndex in $scope.selected) {$scope.price += parseInt($scope.selected[itemIndex].price);}
-    console.log("Price: "+$scope.price);
     $scope.totalCost += $scope.price;
   }
 
@@ -58,11 +52,8 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
   }
 
   $scope.removeFromSelected = function(index){
-    console.log(index);
-    console.log($scope.selected[index]);
     var is_inExtras=false;
     $scope.price -= parseInt($scope.selected[index].price);
-    console.log($scope.totalCost - parseInt($scope.selected[index].price));
     $scope.totalCost -= parseInt($scope.selected[index].price);
     if ($scope.selected[index] == headpreviouslySelected){
       $scope.headSelected = false;

@@ -3,31 +3,16 @@ app.controller('FlavourController',['$scope','getFlavours','cafeDetails','Transa
   var details = cafeDetails.getCafeDetails();
   standrd_pricing = details.standardPrice.split(":");
   special_price = details.specialPrice;
-  //Helper Functions
-  var findPrice = function(standardPrice,limitNum,specialPrice){
-    if ($scope.selected.length < limitNum && $scope.selected[0].type != "special"){
-      $scope.price = standardPrice;
-      $scope.totalCost = $scope.price;
-    }
-    else{
-      console.log("Length: " + $scope.selected.length);
-      $scope.price = specialPrice + standardPrice;
-      $scope.totalCost = $scope.price;
-    }
-  }
+
 
   $scope.price = parseInt(TransactionInfo.getOrderPrice());
-  console.log("Price: " + $scope.price);
   $scope.totalCost = $scope.price;
-  console.log($scope.totalCost);
-  console.log(TransactionInfo.getFlavourSelection());
   $scope.selected = TransactionInfo.getFlavourSelection();
   if ($scope.selected.length != 0){
     findPrice(parseInt(standrd_pricing[0]),parseInt(standrd_pricing[1]),parseInt(standrd_pricing[2]));
   }
   $scope.pageClass = "page-flavour";
   if ($scope.selected.length != 0) $scope.flavourSelected = true;
-  console.log("SelectedScope: " + $scope.selected);
 
   getFlavours.then(function(data){
     $scope.standard_flavours=[];
@@ -99,7 +84,6 @@ $scope.removeFromSelected = function(index){
 
 
 $scope.flavourSubmitted = function(){
-  console.log("TOTOAL COST: " + $scope.totalCost);
   TransactionInfo.setOrderPrice([$scope.totalCost]);
   TransactionInfo.setFlavourSelection($scope.selected);
   TransactionInfo.setDirectionOfTransaction("submit")
@@ -115,6 +99,18 @@ $scope.changeColourOf_backButton = function(){
 
 $scope.direction = function(){
   TransactionInfo.setDirectionOfTransaction("back");
+}
+
+//Helper Functions
+var findPrice = function(standardPrice,limitNum,specialPrice){
+  if ($scope.selected.length < limitNum && $scope.selected[0].type != "special"){
+    $scope.price = standardPrice;
+    $scope.totalCost = $scope.price;
+  }
+  else{
+    $scope.price = specialPrice + standardPrice;
+    $scope.totalCost = $scope.price;
+  }
 }
 
 
