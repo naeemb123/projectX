@@ -8,7 +8,7 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
   if (TransactionInfo.getDirectionOfTransaction() == "submit"){
     if (TransactionInfo.getheadTotal() == 0)
       $scope.totalCost = TransactionInfo.getOrderPrice();
-    else{
+    else{ //User pressed browser back button from payments page OR went back and submitted new flavours
       $scope.totalCost = TransactionInfo.getOrderPrice() - $scope.price;
       $scope.price = 0; //reset price before calculating $scope.price on line 21
     }

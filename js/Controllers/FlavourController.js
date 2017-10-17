@@ -5,6 +5,18 @@ app.controller('FlavourController',['$scope','getFlavours','cafeDetails','Transa
   special_price = details.specialPrice;
 
 
+  //Helper Functions
+  var findPrice = function(standardPrice,limitNum,specialPrice){
+    if ($scope.selected.length < limitNum && $scope.selected[0].type != "special"){
+      $scope.price = standardPrice;
+      $scope.totalCost = $scope.price;
+    }
+    else{
+      $scope.price = specialPrice + standardPrice;
+      $scope.totalCost = $scope.price;
+    }
+  }
+
   $scope.price = parseInt(TransactionInfo.getOrderPrice());
   $scope.totalCost = $scope.price;
   $scope.selected = TransactionInfo.getFlavourSelection();
@@ -86,6 +98,7 @@ $scope.removeFromSelected = function(index){
 $scope.flavourSubmitted = function(){
   TransactionInfo.setOrderPrice([$scope.totalCost]);
   TransactionInfo.setFlavourSelection($scope.selected);
+  TransactionInfo.setHeadPrice(0); //If User went back to change flavours then price of head should be reset
   TransactionInfo.setDirectionOfTransaction("submit")
 }
 
@@ -99,18 +112,6 @@ $scope.changeColourOf_backButton = function(){
 
 $scope.direction = function(){
   TransactionInfo.setDirectionOfTransaction("back");
-}
-
-//Helper Functions
-var findPrice = function(standardPrice,limitNum,specialPrice){
-  if ($scope.selected.length < limitNum && $scope.selected[0].type != "special"){
-    $scope.price = standardPrice;
-    $scope.totalCost = $scope.price;
-  }
-  else{
-    $scope.price = specialPrice + standardPrice;
-    $scope.totalCost = $scope.price;
-  }
 }
 
 
