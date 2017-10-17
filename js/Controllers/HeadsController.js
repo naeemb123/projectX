@@ -6,7 +6,12 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
   $scope.price = TransactionInfo.getHeadPrice();
 
   if (TransactionInfo.getDirectionOfTransaction() == "submit"){
-      $scope.totalCost = TransactionInfo.getOrderPrice() + $scope.price;
+    if (TransactionInfo.getheadTotal() == 0)
+      $scope.totalCost = TransactionInfo.getOrderPrice();
+    else{
+      $scope.totalCost = TransactionInfo.getOrderPrice() - $scope.price;
+      $scope.price = 0; //reset price before calculating $scope.price on line 21
+    }
   }else if(TransactionInfo.getDirectionOfTransaction() == "back"){$scope.totalCost = TransactionInfo.getheadTotal();}
 
 
@@ -66,6 +71,8 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
     TransactionInfo.setOrderPrice($scope.totalCost);
     TransactionInfo.setHeadSelection($scope.selected);
     TransactionInfo.setHeadTotal($scope.totalCost - $scope.price);
+    TransactionInfo.setHeadPrice($scope.price);
+
     TransactionInfo.setDirectionOfTransaction("submit");
   }
 

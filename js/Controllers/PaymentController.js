@@ -14,18 +14,11 @@ app.controller('PaymentController',['$scope','TransactionInfo','$mdpTimePicker',
     $scope.colourChange = "gfHover";
   }
 
-  $scope.timeSelectSubmitted = function(){
-    TransactionInfo.setDirectionOfTransaction("submit");
-  }
-
   $scope.direction = function(){
     TransactionInfo.setDirectionOfTransaction("back");
   }
 
   $scope.paymentSubmitted = function(){
-    TransactionInfo.setOrderPrice($scope.totalCost);
-    TransactionInfo.setHeadSelection($scope.selected);
-    TransactionInfo.setHeadTotal($scope.totalCost - $scope.price);
     TransactionInfo.setDirectionOfTransaction("submit");
   }
 
