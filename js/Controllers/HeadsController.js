@@ -52,7 +52,6 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
   }
 
   $scope.removeFromSelected = function(index){
-    var is_inExtras=false;
     $scope.price -= parseInt($scope.selected[index].price);
     $scope.totalCost -= parseInt($scope.selected[index].price);
     if ($scope.selected[index] == headpreviouslySelected){
