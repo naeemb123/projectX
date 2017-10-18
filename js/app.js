@@ -1,4 +1,4 @@
-var app = angular.module("shishaApp",['ngRoute','ngMaterial','ngAnimate','ui.bootstrap','md.time.picker','720kb.tooltips']);
+var app = angular.module("shishaApp",['ngRoute','ngMaterial','ngAnimate','ui.bootstrap','md.time.picker','720kb.tooltips','angularPayments']);
 
 app.config(function($routeProvider,$mdThemingProvider){
   'use strict';

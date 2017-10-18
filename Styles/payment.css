@@ -17,6 +17,8 @@
 
 #summary{
   margin-left: 26% !important;
+  color: rgb(88, 51, 10);
+  font-weight: bold;
 }
 
 .price_payment{
@@ -58,4 +60,17 @@ md-icon.material-icons{
 i.material-icons{
   /*font-size: 5em;*/
   color: rgb(88, 51, 10);
+}
+
+.timeSelectBox input, .timeSelectBox label {
+  display: block;
+}
+
+.timeSelectBox input {
+  border: 1px solid rgb(88, 51, 10);;
+  border-radius: 4px;
+  outline: none;
+  height: 27px;
+  line-height: 27px;
+  font-size: 18px;
 }

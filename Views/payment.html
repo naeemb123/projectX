@@ -25,7 +25,51 @@
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="Payment">
         <md-content class="md-padding">
-          <div class="timePicker">
+          <form ng-submit="formSubmit()" novalidate>
+            <!-- <div class="col-md-offset-4">
+              <img src="images/SECURE-PAYMENT-LOGO.png" height="100" width="200" style="text-align: center;">
+            </div> -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3" style="text-align: center;">
+                    <label for="number">Card number</label>
+                    <input type="text" ng-model="number" payments-validate="card" payments-type-model="type" size="30" name="number"/>
+                  </div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-1">
+                    <label for="expiry">Expiry</label>
+                    <input type="text" ng-model="expiry" payments-validate="expiry" name="expiry" size="5"/>
+                  </div>
+                  <div class="col-md-1"></div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3" style="text-align: center;">
+                    <label for="nameOnCard">Name on card</label>
+                    <input type="text" ng-model="nameOnCard" size="30" name="nameOnCard"/>
+                  </div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-1">
+                    <label for="cvc">&nbsp;&nbsp;CVC</label>
+                    <input type="text" ng-model="cvc" payments-validate="cvc" payments-type-model="type" name="cvc" size="5"/>
+                  </div>
+                  <div class="col-md-1"></div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-offset-3">
+                    <img src="images/SECURE-PAYMENT-LOGO.png" height="110" width="240" style="margin-top: 2em;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="timePicker col-md-offset-2">
             <md-time-picker ng-model="time.twelve" message="message"></md-time-picker>
           </div>
         </md-content>
