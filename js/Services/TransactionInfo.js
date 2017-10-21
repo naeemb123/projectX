@@ -7,6 +7,10 @@ app.factory('TransactionInfo',[function(){
   var headPrice=0;
   var headTotal=price - headPrice;
 
+  var dateTimeSelected = "";
+  var orderDate = "";
+  var cardHoldersName = "";
+
   return {
     getOrderPrice: function(){
       if (Array.isArray(price)){
@@ -54,6 +58,24 @@ app.factory('TransactionInfo',[function(){
     },
     setDirectionOfTransaction: function(direction){
       directionOfTransaction = direction;
+    },
+    getDateTimeSelected: function(){
+      return (dateTimeSelected == "") ? null: dateTimeSelected;
+    },
+    setDateTimeSelected: function(dateTime){
+      dateTimeSelected = dateTime
+    },
+    getCardHoldersName: function(){
+      return (cardHoldersName == "") ? null: cardHoldersName;
+    },
+    setCardHoldersName: function(name){
+      cardHoldersName = name;
+    },
+    getOrderDate: function(){
+      return orderDate;
+    },
+    setOrderDate: function(date){
+      orderDate = date;
     }
   }
 }]);

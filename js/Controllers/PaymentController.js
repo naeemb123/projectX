@@ -5,6 +5,7 @@ app.controller('PaymentController',['$scope','TransactionInfo','$mdpTimePicker',
   $scope.timeSelected = true;
   $scope.selectedFlavours = TransactionInfo.getFlavourSelection();
   $scope.selectedHeads = TransactionInfo.getHeadSelection();
+  $scope.nameOnCard = "";
 
   $scope.changeColourOf_backButton = function(){
     $scope.colourChange_backButton = "backButton_hover";
@@ -19,18 +20,31 @@ app.controller('PaymentController',['$scope','TransactionInfo','$mdpTimePicker',
   }
 
   $scope.paymentSubmitted = function(){
+    TransactionInfo.setDateTimeSelected(formatDateForSql($scope.time.twelve));
+    console.log(formatDateForSql(new Date()));
+    TransactionInfo.setOrderDate(formatDateForSql(new Date()));
+    TransactionInfo.setCardHoldersName($scope.nameOnCard);
     TransactionInfo.setDirectionOfTransaction("submit");
   }
 
-  $scope.time = {
-      twelve: new Date(),
-      twentyfour: new Date()
-    };
+$scope.time = {
+    twelve: new Date(),
+    twentyfour: new Date()
+  };
 
-    $scope.message = {
-      hour: 'Hour is required',
-      minute: 'Minute is required',
-      meridiem: 'Meridiem is required'
-    }
+  $scope.message = {
+    hour: 'Hour is required',
+    minute: 'Minute is required',
+    meridiem: 'Meridiem is required'
+  }
+
+var formatDateForSql = function(date){
+  return date.getFullYear().toString()
+   + "-" + date.getMonth().toString()
+    + "-" + date.getDay().toString()
+     + " " + date.getHours().toString()
+      + ":" + date.getMinutes().toString()
+       + ":" + date.getSeconds().toString();
+}
 
 }]);

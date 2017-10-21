@@ -1,5 +1,7 @@
 <?php
 
+include "helperClass.php";
+
 $servername = "localhost";
 $username = "root";
 $password = "sheesh";
@@ -9,7 +11,6 @@ $conn = new mysqli($servername, $username, $password,$dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 
 class connectDatabase{
 
@@ -22,7 +23,7 @@ class connectDatabase{
         $name=$rs['name'];
         $url=$rs['url'];
         $type=$rs['type'];
-        $tempdata = array('name'=>$name,'url'=>$url,'type'=>$type);
+        $tempdata = array('name'=>$name,'url'=>$url,'type'=>$type,'Type'=>'flavour');
         array_push($data,$tempdata);
         unset($tempdata);
     }
@@ -37,7 +38,7 @@ class connectDatabase{
       $name = $rs['Name'];
       $url = $rs['url'];
       $price = $rs['price'];
-      $tempdata = array('name'=> $name,'url'=>$url,'price'=>$price);
+      $tempdata = array('name'=> $name,'url'=>$url,'price'=>$price, 'Type'=>'head');
       array_push($data,$tempdata);
       unset($tempdata);
     }
@@ -52,7 +53,7 @@ class connectDatabase{
       $name = $rs['name'];
       $url = $rs['url'];
       $price = $rs['price'];
-      $tempdata = array('name'=> $name,'url'=>$url,'price'=>$price);
+      $tempdata = array('name'=> $name,'url'=>$url,'price'=>$price,'Type'=>'extra');
       array_push($data,$tempdata);
       unset($tempdata);
     }
@@ -70,6 +71,40 @@ class connectDatabase{
           'standardPrice'=>$standardPrice,'specialPrice'=>$specialPrice,'Availability'=>$Availability);
     }
     return json_encode($data);
+  }
+
+  function storeOrderDetails($data){
+    global $conn;
+    $helper = new helperClass();
+    $head = $helper->extractHead($data->Heads);
+    if ($head == 0) echo json_encode("Error: Could not find a Head selected");
+
+    $result = $conn->query("SHOW TABLE STATUS LIKE 'transaction'");
+    $resultData = $result->fetch_array(MYSQLI_ASSOC);
+    $newTransactionID = $resultData['Auto_increment'];
+
+    $sql = "INSERT INTO Transaction (selectedTime, orderDate, cafeID, selectedHead, user)
+     VALUES ('$data->SelectedTime','$data->orderDate','$data->cafeID','$head->name','$data->CardHoldersName');";
+
+    foreach($data->Flavours as $flavour){
+      $sql .= "INSERT INTO user_selectedFlavours(transactionid,flavourName,username)
+      VALUES ('$newTransactionID','$flavour->name','$data->CardHoldersName');";
+    }
+
+    foreach($data->Heads as $headExtras){
+      if ($headExtras->Type === 'extra'){
+        // echo json_encode($headExtras->name . " ");
+        $sql .= "INSERT INTO user_selectedExtras(transactionid,extraName,username)
+        VALUES ('$newTransactionID','$headExtras->name','$data->CardHoldersName');";
+      }
+    }
+
+    // echo json_encode($sql);
+    if (!$conn->multi_query($sql)) {
+      echo "Multi query failed: (" . $conn->errno . ") " . $conn->error;
+    } else{
+      echo json_encode(1);
+    }
   }
 
 }
