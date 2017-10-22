@@ -26,7 +26,13 @@
           <md-content class="md-padding">
             <div class="row" ng-repeat="flavourList in splitImages_standard">
                 <div class="col-md-4 container card flavContainer" ng-repeat="flav in flavourList">
-                  <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_standard(flav)">
+                  <span>
+                    <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_standard(flav)">
+                    <md-tooltip md-delay="400" md-direction="top" class="tooltip-multiline">
+                        Upto <span>{{limit - 1}}</span> standard flavours cost {{standard | currency:'£'}}. <br>
+                        Selecting more than {{limit - 1}} flavours incurs an extra {{special | currency:'£'}} charge.
+                    </md-tooltip>
+                  </span>
                 </div>
             </div>
           </md-content>
@@ -35,7 +41,14 @@
           <md-content class="md-padding">
             <div class="row" ng-repeat="flavourList in splitImages_special">
               <div class="col-md-4 container card flavContainer" ng-repeat="flav in flavourList">
-                <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_special(flav)">
+                <span>
+                  <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_special(flav)">
+                  <md-tooltip md-delay="400" md-direction="top" class="tooltip-multiline">
+                    1 special flavour costs {{special | currency:'£'}}. <br>
+                    NOTE:<br>Only 1 special flavour can be selected. <br>
+                    This cafe does not allow special flavours to be mixed with standard flavours
+                  </md-tooltip>
+                </span>
               </div>
             </div>
           </md-content>

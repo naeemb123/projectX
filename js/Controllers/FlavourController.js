@@ -4,6 +4,22 @@ app.controller('FlavourController',['$scope','getFlavours','cafeDetails','Transa
   standrd_pricing = details.standardPrice.split(":");
   special_price = details.specialPrice;
 
+  //pricing:
+  $scope.standard = parseInt(standrd_pricing[0]);
+  $scope.limit = parseInt(standrd_pricing[1]);
+  $scope.special = parseInt(standrd_pricing[2]);
+
+  $scope.standardTooltipMessage = "Pricing:<br /><br />Upto " +
+                  parseInt(standrd_pricing[1]) +
+                  " standard flavours cost £" +
+                  parseInt(standrd_pricing[0]) +
+                  ".<br />" +
+                  "Selecting more than " +
+                  parseInt(standrd_pricing[1]) +
+                  " flavours incurs an extra £" +
+                  parseInt(standrd_pricing[2]) +
+                  " charge.";
+
 
   //Helper Functions
   var findPrice = function(standardPrice,limitNum,specialPrice){

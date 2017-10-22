@@ -41,7 +41,7 @@ $scope.time = {
 var formatDateForSql = function(date){
   return date.getFullYear().toString()
    + "-" + date.getMonth().toString()
-    + "-" + date.getDay().toString()
+    + "-" + date.getDate().toString()
      + " " + date.getHours().toString()
       + ":" + date.getMinutes().toString()
        + ":" + date.getSeconds().toString();

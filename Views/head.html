@@ -25,7 +25,12 @@
           <md-content class="md-padding">
             <div class="row">
               <div class="col-md-4 container card flavContainer" ng-repeat="head in heads">
-                <img class="flavImage" ng-src="{{head.url}}" ng-click="addToSelected(head,$index)">
+                <span>
+                  <img class="flavImage" ng-src="{{head.url}}" ng-click="addToSelected(head,$index)">
+                  <md-tooltip md-delay="250" md-direction="top" class="tooltip-multiline">
+                    Price = {{head.price | currency:'£'}}
+                  </md-tooltip>
+                </span>
               </div>
             </div>
           </md-content>
@@ -36,7 +41,12 @@
             <h1 ng-show="noExtras" class="noExtras">This Cafe does not provide any extras</h1>
             <div class="row">
               <div class="col-md-4 container card flavContainer" ng-repeat="extra in extras">
-                <img class="flavImage" ng-src="{{extra.url}}" ng-click="addToSelected_extra(extra)">
+                <span>
+                  <img class="flavImage" ng-src="{{extra.url}}" ng-click="addToSelected_extra(extra)">
+                  <md-tooltip md-delay="250" md-direction="top" class="tooltip-multiline">
+                    Price = {{extra.price | currency:'£'}}
+                  </md-tooltip>
+                </span>
               </div>
             </div>
           </md-content>
