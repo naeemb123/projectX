@@ -104,9 +104,9 @@ md-tabs[md-border-bottom] md-tabs-wrapper {
   color: rgb(88, 51, 10);
 }
 
-
-
-
+.tooltip-multiline {
+  height: auto;
+}
 
 .container.flavBox{
   width: 80%;

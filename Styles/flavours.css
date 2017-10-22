@@ -4,27 +4,3 @@
   text-align: center;
   color: rgb(88, 51, 10);
 }
-
-/* Apply this to the inner tooltip component */
-/*.tooltip-inner {
-    word-break: break-all;
-    width: 500px;
-    text-align: center;
-}*/
-
-/* Apply this to the text inside the tooltip */
-/*.span-white-space {
-    white-space: normal;
-}
-
-/*md-tooltip .md-content {
-    height: auto;
-}*/
-
-/*.mat-tooltip {
-white-space: pre-line;
-}*/
-
-.tooltip-multiline {
-  height: auto;
-}
