@@ -1,5 +1,6 @@
 app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInfo',function($scope,$timeout,getHeads,TransactionInfo){
-  $scope.total = 50;
+  $scope.total = 25;
+  $timeout(function(){$scope.total = 50;},350);
   $scope.pageClass = "page-default";
   $scope.noExtras = true;
   $scope.headSelected = false;

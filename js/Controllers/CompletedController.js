@@ -1,7 +1,8 @@
-app.controller('CompletedController',['$scope','TransactionInfo','cafeDetails','storeOrderDetails',
-function($scope,TransactionInfo,cafeDetails,storeOrderDetails){
+app.controller('CompletedController',['$scope','$timeout','TransactionInfo','cafeDetails','storeOrderDetails',
+function($scope,$timeout,TransactionInfo,cafeDetails,storeOrderDetails){
   $scope.pageClass = "page-default";
-  $scope.total = 100;
+  $scope.total = 85;
+  $timeout(function(){$scope.total = 100;},350);
   $scope.OrderMessage = " . . . "
 
   var data = {

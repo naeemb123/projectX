@@ -1,5 +1,6 @@
-app.controller('FlavourController',['$scope','getFlavours','cafeDetails','TransactionInfo',function($scope,getFlavours,cafeDetails,TransactionInfo){
-  $scope.total = 25;
+app.controller('FlavourController',['$scope','$timeout','getFlavours','cafeDetails','TransactionInfo',function($scope,$timeout,getFlavours,cafeDetails,TransactionInfo){
+  $scope.total = 0;
+  $timeout(function(){$scope.total = 25;},650);
   var details = cafeDetails.getCafeDetails();
   standrd_pricing = details.standardPrice.split(":");
   special_price = details.specialPrice;
