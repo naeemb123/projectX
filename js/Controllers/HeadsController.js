@@ -9,8 +9,17 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
   }
 
   var updatePrice = function(selection){
+    $scope.price = 0;
+    $scope.totalCost = 0;
     for (var itemIndex in selection) {$scope.price += parseInt(selection[itemIndex].price);}
     $scope.totalCost += $scope.price;
+  }
+
+  var updateTransactionService = function(){
+    TransactionInfo.setOrderPrice($scope.totalCost);
+    TransactionInfo.setHeadSelection($scope.selected);
+    TransactionInfo.setHeadTotal($scope.totalCost - $scope.price);
+    TransactionInfo.setHeadPrice($scope.price);
   }
 
 
@@ -21,23 +30,23 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
   $scope.pageClass = "page-default";
   $scope.noExtras = true;
   $scope.headSelected = false;
-  $scope.price = TransactionInfo.getHeadPrice();
-
-  if (TransactionInfo.getDirectionOfTransaction() == "submit"){
-    if (TransactionInfo.getheadTotal() == 0)
-      $scope.totalCost = TransactionInfo.getOrderPrice();
-    else{ //User pressed browser back button from payments page OR went back and submitted new flavours
-      $scope.totalCost = TransactionInfo.getOrderPrice() - $scope.price;
-      $scope.price = 0; //reset price before calculating $scope.price on line 21
-    }
-  }else if(TransactionInfo.getDirectionOfTransaction() == "back"){$scope.totalCost = TransactionInfo.getheadTotal();}
-
-
   $scope.selected=TransactionInfo.getHeadSelection();
   if (isHeadSelected($scope.selected)){
     $scope.headSelected=true;
   }
   updatePrice($scope.selected); //update price of selection
+  // $scope.price = TransactionInfo.getHeadPrice();
+
+  if (TransactionInfo.getDirectionOfTransaction() == "submit"){
+    if (TransactionInfo.getheadTotal() == 0)
+      $scope.totalCost += TransactionInfo.getFlavourPrice();
+    else{ //User pressed browser back button from payments page OR went back and submitted new flavours
+
+      $scope.totalCost += TransactionInfo.getFlavourPrice();
+      // $scope.price = 0; //reset price before calculating $scope.price on line 21
+    }
+  }else if(TransactionInfo.getDirectionOfTransaction() == "back"){$scope.totalCost += TransactionInfo.getFlavourPrice();}
+  updateTransactionService(); //update Transaction service
 
   getHeads.heads().then(function(data){
       $scope.heads = data;
@@ -60,6 +69,7 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
     $scope.headSelected = true;
     headpreviouslySelected = head;
     TransactionInfo.setPreviouslySelectedHead(headpreviouslySelected);
+    updateTransactionService();
   }
 
   $scope.addToSelected = function(ev,extra){
@@ -70,6 +80,7 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
       $scope.selected.push(extra);
       $scope.price += parseInt(extra.price);
       $scope.totalCost +=  parseInt(extra.price);
+      updateTransactionService();
     }
   }
 
@@ -82,13 +93,11 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
       AlertService.showAlert(ev,"Please choose a head type to continue","Woops!");
     }
     else{$scope.selected.splice(index,1);}
+    updateTransactionService();
   }
 
   $scope.flavourSubmitted = function(){
-    TransactionInfo.setOrderPrice($scope.totalCost);
-    TransactionInfo.setHeadSelection($scope.selected);
-    TransactionInfo.setHeadTotal($scope.totalCost - $scope.price);
-    TransactionInfo.setHeadPrice($scope.price);
+    updateTransactionService();
 
     TransactionInfo.setDirectionOfTransaction("submit");
   }

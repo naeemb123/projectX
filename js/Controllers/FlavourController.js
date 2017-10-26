@@ -22,7 +22,8 @@ function($scope,$timeout,AlertService,getFlavours,cafeDetails,TransactionInfo){
                   parseInt(standrd_pricing[2]) +
                   " charge.";
 
-  //Helper Functions
+  //Helper Functions =================================================================================
+
   var findPrice = function(standardPrice,limitNum,specialPrice){
     if ($scope.selected.length < limitNum && $scope.selected[0].type != "special"){
       $scope.price = standardPrice;
@@ -33,6 +34,15 @@ function($scope,$timeout,AlertService,getFlavours,cafeDetails,TransactionInfo){
       $scope.totalCost = $scope.price;
     }
   }
+
+  var updateTransactionService = function(){
+    TransactionInfo.setOrderPrice([parseInt($scope.totalCost)]);
+    TransactionInfo.setFlavourPrice(parseInt($scope.price));
+    TransactionInfo.setFlavourSelection($scope.selected);
+    TransactionInfo.setHeadPrice(0); //If User went back to change flavours then price of head should be reset
+  }
+
+//===================================================================================================
 
   $scope.price = parseInt(TransactionInfo.getOrderPrice());
   $scope.totalCost = $scope.price;
@@ -75,15 +85,19 @@ $scope.addToSelected = function(flavour,ev){
       for (i=0; i<$scope.selected.length; i++){
         if ($scope.selected[i] == flavour) alreadySelected=true;
       }
-      if (!alreadySelected) $scope.selected.push(flavour);
+      if (!alreadySelected) {
+        $scope.selected.push(flavour);
+      }
       else{AlertService.showAlert(ev,"You have already selected this flavour","Woops!")}
     }
   }else{
     $scope.selected.push(flavour)
+    TransactionInfo.setFlavourSelection($scope.selected);//update Transaction service
   }
   if ($scope.selected.length >= 1) $scope.flavourSelected=true;
   //pricing
   findPrice(parseInt(standrd_pricing[0]),parseInt(standrd_pricing[1]),parseInt(standrd_pricing[2]));
+  updateTransactionService();
 }
 
 $scope.addToSelected_unique = function(flavour,ev){
@@ -97,6 +111,8 @@ $scope.addToSelected_unique = function(flavour,ev){
     $scope.flavourSelected=true;
     $scope.price = special_price;
     $scope.totalCost = parseInt($scope.price);
+
+    updateTransactionService();
   }
 }
 
@@ -110,16 +126,14 @@ $scope.removeFromSelected = function(index){
     $scope.price = standrd_pricing[0];
     $scope.totalCost = parseInt($scope.price);
   }
-
+  updateTransactionService();
   //for next button
   if ($scope.selected.length < 1) $scope.flavourSelected=false;
 }
 
 
 $scope.flavourSubmitted = function(){
-  TransactionInfo.setOrderPrice([$scope.totalCost]);
-  TransactionInfo.setFlavourSelection($scope.selected);
-  TransactionInfo.setHeadPrice(0); //If User went back to change flavours then price of head should be reset
+  updateTransactionService();
   TransactionInfo.setDirectionOfTransaction("submit")
 }
 

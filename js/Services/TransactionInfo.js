@@ -5,6 +5,7 @@ app.factory('TransactionInfo',[function(){
   var headpreviouslySelected=null;
   var headSelection=[];
   var headPrice=0;
+  var flavourPrice=0;
   var headTotal=price - headPrice;
 
   var dateTimeSelected = "";
@@ -31,6 +32,12 @@ app.factory('TransactionInfo',[function(){
     },
     getHeadSelection: function(){
       return headSelection;
+    },
+    getFlavourPrice: function(){
+      return flavourPrice;
+    },
+    setFlavourPrice: function(price){
+      flavourPrice = price;
     },
     setHeadSelection: function(head){
       headSelection=head;
