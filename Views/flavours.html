@@ -3,14 +3,26 @@
 <h1 class="selection">Your Selection:</h1>
 <div class="container selectedContainer">
   <div class="repeatingLoop" ng-repeat="select in selected">
-    <img class="selectedImg" ng-src="{{select.url}}">
-    <span class="close" ng-click="removeFromSelected($index)"></span>
+    <span ng-if="select.type == 'standard'">
+      <md-tooltip md-delay="250" md-direction="top" class="tooltip-multiline">
+        Price = {{standard | currency:'£'}}
+      </md-tooltip>
+      <img class="selectedImg" ng-src="{{select.url}}">
+    </span>
+    <span ng-if="select.type == 'special'">
+      <md-tooltip md-delay="250" md-direction="top" class="tooltip-multiline">
+        Price = {{special + standard | currency:'£'}}
+      </md-tooltip>
+      <img class="selectedImg" ng-src="{{select.url}}">
+    </span>
+      <span class="close" ng-click="removeFromSelected($index)"></span>
   </div>
 </div>
 <div class="price">
   <h1 class="howMuch"><b>{{ price | currency:'£'}}</b></h1>
   <h5 class="totalCost">Total: {{totalCost | currency:'£'}}</h5>
 </div>
+<span ng-if="ready"><category></category></span>
 <div class="chooseYourFlavours">
   <a href="#!/">
     <div class="backButton" ng-mouseover="changeColourOf_backButton()" ng-mouseleave="colourChange_backButton=''" ng-click="direction()">
@@ -27,10 +39,9 @@
             <div class="row" ng-repeat="flavourList in splitImages_standard">
                 <div class="col-md-4 container card flavContainer" ng-repeat="flav in flavourList">
                   <span>
-                    <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_standard(flav)">
+                    <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected(flav,$event)">
                     <md-tooltip md-delay="400" md-direction="top" class="tooltip-multiline">
-                        Upto <span>{{limit - 1}}</span> standard flavours cost {{standard | currency:'£'}}. <br>
-                        Selecting more than {{limit - 1}} flavours incurs an extra {{special | currency:'£'}} charge.
+                        Price {{standard | currency:'£'}}
                     </md-tooltip>
                   </span>
                 </div>
@@ -42,11 +53,9 @@
             <div class="row" ng-repeat="flavourList in splitImages_special">
               <div class="col-md-4 container card flavContainer" ng-repeat="flav in flavourList">
                 <span>
-                  <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_special(flav)">
+                  <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_unique(flav,$event)">
                   <md-tooltip md-delay="400" md-direction="top" class="tooltip-multiline">
-                    1 special flavour costs {{special | currency:'£'}}. <br>
-                    NOTE:<br>Only 1 special flavour can be selected. <br>
-                    This cafe does not allow special flavours to be mixed with standard flavours
+                    Price {{special + standard| currency:'£'}}
                   </md-tooltip>
                 </span>
               </div>

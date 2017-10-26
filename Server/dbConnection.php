@@ -18,6 +18,7 @@ class connectDatabase{
     global $conn;
     $result = $conn->query("SELECT name, url,type from Selection_flavours a , Flavours as b where cafeID='$cafeID' and a.flavourName = b.Name");
     $data = array();
+    $listOfCategories = array();
     while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
         // $stringArray=array('Flavours'=>explode(',',$rs["flavours"]),'Heads'=>explode(',',$rs["heads"]));
         $name=$rs['name'];
@@ -25,8 +26,10 @@ class connectDatabase{
         $type=$rs['type'];
         $tempdata = array('name'=>$name,'url'=>$url,'type'=>$type,'Type'=>'flavour');
         array_push($data,$tempdata);
+        if (!in_array($type,$listOfCategories)) array_push($listOfCategories,$type);
         unset($tempdata);
     }
+    array_push($data,array('Categories'=>$listOfCategories));
     return json_encode($data);
   }
 

@@ -1,4 +1,21 @@
-app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInfo',function($scope,$timeout,getHeads,TransactionInfo){
+app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInfo','AlertService',function($scope,$timeout,getHeads,TransactionInfo,AlertService){
+
+  //Helper Functions
+  var isHeadSelected = function(selection){
+    var isHeadSelected = false;
+    for (i=0; i<selection.length; i++)
+      if (selection[i].Type == "head") isHeadSelected = true
+    return isHeadSelected;
+  }
+
+  var updatePrice = function(selection){
+    for (var itemIndex in selection) {$scope.price += parseInt(selection[itemIndex].price);}
+    $scope.totalCost += $scope.price;
+  }
+
+
+  //=================================================================================
+
   $scope.total = 25;
   $timeout(function(){$scope.total = 50;},350);
   $scope.pageClass = "page-default";
@@ -17,11 +34,10 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
 
 
   $scope.selected=TransactionInfo.getHeadSelection();
-  if ($scope.selected.length !=0){
+  if (isHeadSelected($scope.selected)){
     $scope.headSelected=true;
-    for (var itemIndex in $scope.selected) {$scope.price += parseInt($scope.selected[itemIndex].price);}
-    $scope.totalCost += $scope.price;
   }
+  updatePrice($scope.selected); //update price of selection
 
   getHeads.heads().then(function(data){
       $scope.heads = data;
@@ -32,7 +48,7 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
   });
 
   var headpreviouslySelected = TransactionInfo.getPreviouslySelectedHead();
-  $scope.addToSelected = function(head){
+  $scope.addToSelected_unique = function(head){
     if ($scope.headSelected){
       for(i=0;i<$scope.selected.length;i++) if($scope.selected[i] == headpreviouslySelected) $scope.selected.splice(i,1);
       $scope.price -= parseInt(headpreviouslySelected.price);
@@ -46,10 +62,10 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
     TransactionInfo.setPreviouslySelectedHead(headpreviouslySelected);
   }
 
-  $scope.addToSelected_extra = function(extra){
+  $scope.addToSelected = function(ev,extra){
     var alreadyExists = false;
     for(i=0;i<$scope.selected.length;i++) if ($scope.selected[i] == extra) alreadyExists=true;
-    if (alreadyExists) alert("Item already selected!");
+    if (alreadyExists) AlertService.showAlert(ev,"Item already selected!","Woops!");
     else{
       $scope.selected.push(extra);
       $scope.price += parseInt(extra.price);
@@ -57,13 +73,13 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
     }
   }
 
-  $scope.removeFromSelected = function(index){
+  $scope.removeFromSelected = function(ev,index){
     $scope.price -= parseInt($scope.selected[index].price);
     $scope.totalCost -= parseInt($scope.selected[index].price);
     if ($scope.selected[index] == headpreviouslySelected){
       $scope.headSelected = false;
       $scope.selected.splice(index,1);
-      alert("Please choose a head type to continue");
+      AlertService.showAlert(ev,"Please choose a head type to continue","Woops!");
     }
     else{$scope.selected.splice(index,1);}
   }

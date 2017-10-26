@@ -3,8 +3,13 @@
 <h1 class="selection">Your Selection:</h1>
 <div class="container selectedContainer">
   <div class="repeatingLoop" ng-repeat="select in selected">
-    <img class="selectedImg" ng-src="{{select.url}}">
-    <span class="close" ng-click="removeFromSelected($index)"></span>
+    <span>
+      <img class="selectedImg" ng-src="{{select.url}}">
+      <span class="close" ng-click="removeFromSelected($event,$index)"></span>
+      <md-tooltip md-delay="250" md-direction="top" class="tooltip-multiline">
+        Price = {{select.price | currency:'£'}}
+      </md-tooltip>
+    </span>
   </div>
 </div>
 <div class="price">
@@ -26,7 +31,7 @@
             <div class="row">
               <div class="col-md-4 container card flavContainer" ng-repeat="head in heads">
                 <span>
-                  <img class="flavImage" ng-src="{{head.url}}" ng-click="addToSelected(head,$index)">
+                  <img class="flavImage" ng-src="{{head.url}}" ng-click="addToSelected_unique(head,$index)">
                   <md-tooltip md-delay="250" md-direction="top" class="tooltip-multiline">
                     Price = {{head.price | currency:'£'}}
                   </md-tooltip>
@@ -42,7 +47,7 @@
             <div class="row">
               <div class="col-md-4 container card flavContainer" ng-repeat="extra in extras">
                 <span>
-                  <img class="flavImage" ng-src="{{extra.url}}" ng-click="addToSelected_extra(extra)">
+                  <img class="flavImage" ng-src="{{extra.url}}" ng-click="addToSelected($event, extra)">
                   <md-tooltip md-delay="250" md-direction="top" class="tooltip-multiline">
                     Price = {{extra.price | currency:'£'}}
                   </md-tooltip>
