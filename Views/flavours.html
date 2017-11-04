@@ -32,38 +32,44 @@
   <h1 class="text">Choose your flavours</h1>
   <!-- <h3 tooltips tooltip-template="Tool">Hello</h3> -->
   <div class="container flavBox card" style="overflow-y: scroll; height:350px;">
-    <md-content class="flaTabs">
-      <md-tabs md-dynamic-height md-border-bottom>
-        <md-tab label="Standard">
-          <md-content class="md-padding">
-            <div class="row" ng-repeat="flavourList in splitImages_standard">
+    <!-- <h1>{{category.list}}</h1> -->
+      <md-content class="flaTabs">
+        <md-tabs md-dynamic-height md-border-bottom>
+          <md-tab label="Standard">
+            <md-content class="md-padding">
+              <div class="row" ng-repeat="flavourList in standard_flavours">
                 <div class="col-md-4 container card flavContainer" ng-repeat="flav in flavourList">
                   <span>
-                    <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected(flav,$event)">
+                    <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected(flav,$index)">
                     <md-tooltip md-delay="400" md-direction="top" class="tooltip-multiline">
-                        Price {{standard | currency:'£'}}
+                      Price = {{standard | currency:'£'}}
                     </md-tooltip>
                   </span>
                 </div>
-            </div>
-          </md-content>
-        </md-tab>
-        <md-tab label="Special">
-          <md-content class="md-padding">
-            <div class="row" ng-repeat="flavourList in splitImages_special">
-              <div class="col-md-4 container card flavContainer" ng-repeat="flav in flavourList">
-                <span>
-                  <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected_unique(flav,$event)">
-                  <md-tooltip md-delay="400" md-direction="top" class="tooltip-multiline">
-                    Price {{special + standard| currency:'£'}}
-                  </md-tooltip>
-                </span>
               </div>
-            </div>
-          </md-content>
-        </md-tab>
-      </md-tabs>
-    </md-content>
+            </md-content>
+          </md-tab>
+
+          <div ng-repeat="category in arrayData">
+            <md-tab label="{{category.name}}">
+              <md-content class="md-padding">
+                <!-- <h1>{{category.list}}</h1> -->
+                <div class="row" ng-repeat="flavourList in category.list">
+                  <!-- <h1>{{flavourList}}</h1> -->
+                    <div class="col-md-4 container card flavContainer" ng-repeat="flav in flavourList">
+                      <span>
+                        <img class="flavImage" ng-src="{{flav.url}}" ng-click="addToSelected(flav,$event)">
+                        <md-tooltip md-delay="400" md-direction="top" class="tooltip-multiline">
+                            Price {{standard + special | currency:'£'}}
+                        </md-tooltip>
+                      </span>
+                    </div>
+                </div>
+              </md-content>
+            </md-tab>
+          </div>
+        </md-tabs>
+      </md-content>
   </div>
 </div>
 <a href="#!head/"><div class="done" ng-show="flavourSelected" ng-mouseover="changeColourOfGf()" ng-mouseleave="colourChange=''" ng-click="flavourSubmitted()">

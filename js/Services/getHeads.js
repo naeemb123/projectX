@@ -12,5 +12,5 @@ app.factory('getHeads',['$http',function($http){
         return response.data;
       });
     }
-  }
+  };
 }]);

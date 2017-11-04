@@ -4,23 +4,23 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
   var isHeadSelected = function(selection){
     var isHeadSelected = false;
     for (i=0; i<selection.length; i++)
-      if (selection[i].Type == "head") isHeadSelected = true
+      if (selection[i].Type == "head") isHeadSelected = true;
     return isHeadSelected;
-  }
+  };
 
   var updatePrice = function(selection){
     $scope.price = 0;
     $scope.totalCost = 0;
     for (var itemIndex in selection) {$scope.price += parseInt(selection[itemIndex].price);}
     $scope.totalCost += $scope.price;
-  }
+  };
 
   var updateTransactionService = function(){
     TransactionInfo.setOrderPrice($scope.totalCost);
     TransactionInfo.setHeadSelection($scope.selected);
     TransactionInfo.setHeadTotal($scope.totalCost - $scope.price);
     TransactionInfo.setHeadPrice($scope.price);
-  }
+  };
 
 
   //=================================================================================
@@ -52,6 +52,14 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
       $scope.heads = data;
   });
   getHeads.extras().then(function(data){
+    $scope.arrayData = [];
+    data.forEach(d => {
+      $scope.arrayData.push({'list': [d[Object.keys(d)[0]]],'name':Object.keys(d)[0]});
+    });
+    $scope.arrayData.forEach(category => {
+      category.list = category.list[0];
+    });
+    console.log($scope.arrayData);
     $scope.extras = data;
     $scope.noExtras = false;
   });
@@ -63,14 +71,15 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
       $scope.price -= parseInt(headpreviouslySelected.price);
       $scope.totalCost -= parseInt(headpreviouslySelected.price);
       $timeout(function(){$scope.selected.push(head);},500);
-    }else{$scope.selected.push(head)}
+    }
+    else{$scope.selected.push(head);}
     $scope.price += parseInt(head.price);
     $scope.totalCost += parseInt(head.price);
     $scope.headSelected = true;
     headpreviouslySelected = head;
     TransactionInfo.setPreviouslySelectedHead(headpreviouslySelected);
     updateTransactionService();
-  }
+  };
 
   $scope.addToSelected = function(ev,extra){
     var alreadyExists = false;
@@ -82,7 +91,7 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
       $scope.totalCost +=  parseInt(extra.price);
       updateTransactionService();
     }
-  }
+  };
 
   $scope.removeFromSelected = function(ev,index){
     $scope.price -= parseInt($scope.selected[index].price);
@@ -94,26 +103,26 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
     }
     else{$scope.selected.splice(index,1);}
     updateTransactionService();
-  }
+  };
 
   $scope.flavourSubmitted = function(){
     updateTransactionService();
 
     TransactionInfo.setDirectionOfTransaction("submit");
-  }
+  };
 
   $scope.changeColourOfGf = function(){
     $scope.colourChange = "gfHover";
     // $scope.pageClass = "page-default-back";
-  }
+  };
 
   $scope.changeColourOf_backButton = function(){
     $scope.colourChange_backButton = "backButton_hover";
-  }
+  };
 
   $scope.direction = function(){
     TransactionInfo.setDirectionOfTransaction("back");
-  }
+  };
 
 
 }]);

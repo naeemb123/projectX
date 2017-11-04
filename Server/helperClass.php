@@ -8,6 +8,13 @@ class helperClass{
     return 0;
   }
 
+  function getIndex($list,$type){
+    for ($i=0; $i< count($list); $i++){
+      if ($list[$i][$type] !== null) return $i;
+    }
+    return -1;
+  }
+
 }
 
  ?>

@@ -70,7 +70,7 @@ app.factory('TransactionInfo',[function(){
       return (dateTimeSelected == "") ? null: dateTimeSelected;
     },
     setDateTimeSelected: function(dateTime){
-      dateTimeSelected = dateTime
+      dateTimeSelected = dateTime;
     },
     getCardHoldersName: function(){
       return (cardHoldersName == "") ? null: cardHoldersName;

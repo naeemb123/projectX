@@ -40,22 +40,25 @@
             </div>
           </md-content>
         </md-tab>
-        <md-tab label="Extras">
-          <md-content class="md-padding">
 
-            <h1 ng-show="noExtras" class="noExtras">This Cafe does not provide any extras</h1>
-            <div class="row">
-              <div class="col-md-4 container card flavContainer" ng-repeat="extra in extras">
-                <span>
-                  <img class="flavImage" ng-src="{{extra.url}}" ng-click="addToSelected($event, extra)">
-                  <md-tooltip md-delay="250" md-direction="top" class="tooltip-multiline">
-                    Price = {{extra.price | currency:'£'}}
-                  </md-tooltip>
-                </span>
+
+        <div ng-repeat="category in arrayData">
+          <md-tab label="{{category.name}}">
+            <md-content class="md-padding">
+              <!-- <h1 ng-show="noExtras" class="noExtras">This Cafe does not provide any {{category.name}}</h1> -->
+              <div class="row">
+                <div class="col-md-4 container card flavContainer" ng-repeat="extra in category.list">
+                  <span>
+                    <img class="flavImage" ng-src="{{extra.url}}" ng-click="addToSelected($event, extra)">
+                    <md-tooltip md-delay="250" md-direction="top" class="tooltip-multiline">
+                      Price = {{extra.price | currency:'£'}}
+                    </md-tooltip>
+                  </span>
+                </div>
               </div>
-            </div>
-          </md-content>
-        </md-tab>
+            </md-content>
+          </md-tab>
+        </div>
       </md-tabs>
     </md-content>
   </div>

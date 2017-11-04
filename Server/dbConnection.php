@@ -16,21 +16,34 @@ class connectDatabase{
 
   function getAvailable_flavours($cafeID){
     global $conn;
-    $result = $conn->query("SELECT name, url,type from Selection_flavours a , Flavours as b where cafeID='$cafeID' and a.flavourName = b.Name");
-    $data = array();
+    $helper = new helperClass();
+
+    $getCafeFlavourSelection = $conn->query("SELECT DISTINCT type FROM Selection_flavours");
+    $flavourList = array();
     $listOfCategories = array();
+    while($rs = $getCafeFlavourSelection->fetch_array(MYSQLI_ASSOC)){
+      $tempdata = array($rs['type'] => array());
+      array_push($listOfCategories,$rs['type']);
+      array_push($flavourList,$tempdata);
+      unset($tempdata);
+    }
+
+    $result = $conn->query("SELECT name, url,type,price from Selection_flavours a , Flavours as b where cafeID='$cafeID' and a.flavourName = b.Name");
+    $data = array();
     while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
         // $stringArray=array('Flavours'=>explode(',',$rs["flavours"]),'Heads'=>explode(',',$rs["heads"]));
         $name=$rs['name'];
         $url=$rs['url'];
         $type=$rs['type'];
-        $tempdata = array('name'=>$name,'url'=>$url,'type'=>$type,'Type'=>'flavour');
-        array_push($data,$tempdata);
-        if (!in_array($type,$listOfCategories)) array_push($listOfCategories,$type);
+        $price=$rs['price'];
+        $tempdata = array('name'=>$name,'url'=>$url,'type'=>$type,'price'=>$price,'Type'=>'flavour');
+        $index = $helper->getIndex($flavourList,$type);
+        if ($index == -1) return json_encode("Error: Flavour type is not recognised. type is different to what is stored in the selection_flavours table in DB");
+        array_push($flavourList[$index][$type],$tempdata);
         unset($tempdata);
     }
-    array_push($data,array('Categories'=>$listOfCategories));
-    return json_encode($data);
+    // array_push($flavourList,array('categories' => $listOfCategories));
+    return json_encode($flavourList);
   }
 
   function getAvailable_heads($cafeID){
@@ -50,17 +63,29 @@ class connectDatabase{
 
   function getAvailable_extras($cafeID){
     global $conn;
-    $result = $conn->query("SELECT name, url, price FROM Selection_extras as a,Extras as b WHERE a.extraName = b.name and cafeid = '$cafeID'");
+    $helper = new helperClass();
+    $getCafeExtraSelection = $conn->query("SELECT DISTINCT type FROM Selection_extras");
+    $extraList = array();
+    while($rs = $getCafeExtraSelection->fetch_array(MYSQLI_ASSOC)){
+      $tempdata = array($rs['type'] => array());
+      array_push($extraList,$tempdata);
+      unset($tempdata);
+    }
+
+    $result = $conn->query("SELECT name, url, price, type FROM Selection_extras as a,Extras as b WHERE a.extraName = b.name and cafeid = '$cafeID'");
     $data=array();
     while($rs = $result->fetch_array(MYSQLI_ASSOC)){
       $name = $rs['name'];
       $url = $rs['url'];
       $price = $rs['price'];
-      $tempdata = array('name'=> $name,'url'=>$url,'price'=>$price,'Type'=>'extra');
-      array_push($data,$tempdata);
+      $type = $rs['type'];
+      $tempdata = array('name'=> $name,'url'=>$url,'price'=>$price,'Type'=>'extra','Category'=>$type);
+      $index = $helper->getIndex($extraList,$type);
+      if ($index == -1) return json_encode("Error: Extra type is not recognised. type is different to what is stored in the selection_extras table in DB");
+      array_push($extraList[$index][$type],$tempdata);
       unset($tempdata);
     }
-    return json_encode($data);
+    return json_encode($extraList);
 
   }
 
