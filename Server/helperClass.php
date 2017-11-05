@@ -15,6 +15,18 @@ class helperClass{
     return -1;
   }
 
+  function getDistinctCategories($tableName,$conn){
+    $list = array();
+    //Selection_flavours
+    $getCafeFlavourSelection = $conn->query("SELECT DISTINCT type FROM $tableName");
+    while($rs = $getCafeFlavourSelection->fetch_array(MYSQLI_ASSOC)){
+      $tempdata = array($rs['type'] => array());
+      array_push($list,$tempdata);
+      unset($tempdata);
+    }
+    return $list;
+  }
+
 }
 
  ?>

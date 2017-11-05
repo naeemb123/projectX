@@ -17,16 +17,7 @@ class connectDatabase{
   function getAvailable_flavours($cafeID){
     global $conn;
     $helper = new helperClass();
-
-    $getCafeFlavourSelection = $conn->query("SELECT DISTINCT type FROM Selection_flavours");
-    $flavourList = array();
-    $listOfCategories = array();
-    while($rs = $getCafeFlavourSelection->fetch_array(MYSQLI_ASSOC)){
-      $tempdata = array($rs['type'] => array());
-      array_push($listOfCategories,$rs['type']);
-      array_push($flavourList,$tempdata);
-      unset($tempdata);
-    }
+    $flavourList = $helper->getDistinctCategories('Selection_flavours',$conn);
 
     $result = $conn->query("SELECT name, url,type,price from Selection_flavours a , Flavours as b where cafeID='$cafeID' and a.flavourName = b.Name");
     $data = array();
@@ -64,13 +55,7 @@ class connectDatabase{
   function getAvailable_extras($cafeID){
     global $conn;
     $helper = new helperClass();
-    $getCafeExtraSelection = $conn->query("SELECT DISTINCT type FROM Selection_extras");
-    $extraList = array();
-    while($rs = $getCafeExtraSelection->fetch_array(MYSQLI_ASSOC)){
-      $tempdata = array($rs['type'] => array());
-      array_push($extraList,$tempdata);
-      unset($tempdata);
-    }
+    $extraList = $helper->getDistinctCategories('Selection_extras',$conn);
 
     $result = $conn->query("SELECT name, url, price, type FROM Selection_extras as a,Extras as b WHERE a.extraName = b.name and cafeid = '$cafeID'");
     $data=array();

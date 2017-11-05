@@ -1,6 +1,38 @@
 app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInfo','AlertService',function($scope,$timeout,getHeads,TransactionInfo,AlertService){
 
-  //Helper Functions
+  //==============================================>>>HELPER FUNCTIONS<<==============================================
+
+var init = function(){
+  $scope.total = 25;
+  $timeout(function(){$scope.total = 50;},350);
+  $scope.pageClass = "page-default";
+  $scope.noExtras = true;
+  $scope.headSelected = false;
+  init_selectionList();
+  init_priceAndTotalCost();
+};
+
+var init_selectionList = function(){
+  $scope.selected=TransactionInfo.getHeadSelection();
+  if (isHeadSelected($scope.selected)){
+    $scope.headSelected=true;
+  }
+  updatePrice($scope.selected); //update price of selection
+};
+
+var init_priceAndTotalCost = function(){
+  if (TransactionInfo.getDirectionOfTransaction() == "submit"){
+    if (TransactionInfo.getheadTotal() == 0)
+      $scope.totalCost += TransactionInfo.getFlavourPrice();
+    else{ //User pressed browser back button from payments page OR went back and submitted new flavours
+
+      $scope.totalCost += TransactionInfo.getFlavourPrice();
+      // $scope.price = 0; //reset price before calculating $scope.price on line 21
+    }
+  }else if(TransactionInfo.getDirectionOfTransaction() == "back"){$scope.totalCost += TransactionInfo.getFlavourPrice();}
+  updateTransactionService(); //update Transaction service
+};
+
   var isHeadSelected = function(selection){
     var isHeadSelected = false;
     for (i=0; i<selection.length; i++)
@@ -15,57 +47,7 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
     $scope.totalCost += $scope.price;
   };
 
-  var updateTransactionService = function(){
-    TransactionInfo.setOrderPrice($scope.totalCost);
-    TransactionInfo.setHeadSelection($scope.selected);
-    TransactionInfo.setHeadTotal($scope.totalCost - $scope.price);
-    TransactionInfo.setHeadPrice($scope.price);
-  };
-
-
-  //=================================================================================
-
-  $scope.total = 25;
-  $timeout(function(){$scope.total = 50;},350);
-  $scope.pageClass = "page-default";
-  $scope.noExtras = true;
-  $scope.headSelected = false;
-  $scope.selected=TransactionInfo.getHeadSelection();
-  if (isHeadSelected($scope.selected)){
-    $scope.headSelected=true;
-  }
-  updatePrice($scope.selected); //update price of selection
-  // $scope.price = TransactionInfo.getHeadPrice();
-
-  if (TransactionInfo.getDirectionOfTransaction() == "submit"){
-    if (TransactionInfo.getheadTotal() == 0)
-      $scope.totalCost += TransactionInfo.getFlavourPrice();
-    else{ //User pressed browser back button from payments page OR went back and submitted new flavours
-
-      $scope.totalCost += TransactionInfo.getFlavourPrice();
-      // $scope.price = 0; //reset price before calculating $scope.price on line 21
-    }
-  }else if(TransactionInfo.getDirectionOfTransaction() == "back"){$scope.totalCost += TransactionInfo.getFlavourPrice();}
-  updateTransactionService(); //update Transaction service
-
-  getHeads.heads().then(function(data){
-      $scope.heads = data;
-  });
-  getHeads.extras().then(function(data){
-    $scope.arrayData = [];
-    data.forEach(d => {
-      $scope.arrayData.push({'list': [d[Object.keys(d)[0]]],'name':Object.keys(d)[0]});
-    });
-    $scope.arrayData.forEach(category => {
-      category.list = category.list[0];
-    });
-    console.log($scope.arrayData);
-    $scope.extras = data;
-    $scope.noExtras = false;
-  });
-
-  var headpreviouslySelected = TransactionInfo.getPreviouslySelectedHead();
-  $scope.addToSelected_unique = function(head){
+  var addShishaHead = function(head){
     if ($scope.headSelected){
       for(i=0;i<$scope.selected.length;i++) if($scope.selected[i] == headpreviouslySelected) $scope.selected.splice(i,1);
       $scope.price -= parseInt(headpreviouslySelected.price);
@@ -81,9 +63,10 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
     updateTransactionService();
   };
 
-  $scope.addToSelected = function(ev,extra){
+  var addExtraItem = function(ev,extra){
     var alreadyExists = false;
-    for(i=0;i<$scope.selected.length;i++) if ($scope.selected[i] == extra) alreadyExists=true;
+    for(i=0;i<$scope.selected.length;i++)
+      if ($scope.selected[i].Category == extra.Category && $scope.selected[i].url == extra.url) alreadyExists=true;
     if (alreadyExists) AlertService.showAlert(ev,"Item already selected!","Woops!");
     else{
       $scope.selected.push(extra);
@@ -93,7 +76,7 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
     }
   };
 
-  $scope.removeFromSelected = function(ev,index){
+  var removeItemFromSelection = function(ev,index){
     $scope.price -= parseInt($scope.selected[index].price);
     $scope.totalCost -= parseInt($scope.selected[index].price);
     if ($scope.selected[index] == headpreviouslySelected){
@@ -105,15 +88,48 @@ app.controller('HeadsController',['$scope','$timeout','getHeads','TransactionInf
     updateTransactionService();
   };
 
+  var updateTransactionService = function(){
+    TransactionInfo.setOrderPrice($scope.totalCost);
+    TransactionInfo.setHeadSelection($scope.selected);
+    TransactionInfo.setHeadTotal($scope.totalCost - $scope.price);
+    TransactionInfo.setHeadPrice($scope.price);
+  };
+
+
+  //==================================================================================================================
+
+  init();
+
+  getHeads.heads().then(function(data){
+      $scope.heads = data;
+  });
+  getHeads.extras().then(function(data){
+    $scope.arrayData = data;
+    $scope.arrayData.forEach(category => {
+      category.list = category.list[0];
+    });
+  });
+
+  var headpreviouslySelected = TransactionInfo.getPreviouslySelectedHead();
+  $scope.addToSelected_unique = function(head){
+    addShishaHead(head);
+  };
+
+  $scope.addToSelected = function(ev,extra){
+    addExtraItem(ev,extra);
+  };
+
+  $scope.removeFromSelected = function(ev,index){
+    removeItemFromSelection(ev,index);
+  };
+
   $scope.flavourSubmitted = function(){
     updateTransactionService();
-
     TransactionInfo.setDirectionOfTransaction("submit");
   };
 
   $scope.changeColourOfGf = function(){
     $scope.colourChange = "gfHover";
-    // $scope.pageClass = "page-default-back";
   };
 
   $scope.changeColourOf_backButton = function(){

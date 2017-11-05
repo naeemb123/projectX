@@ -9,7 +9,11 @@ app.factory('getHeads',['$http',function($http){
     extras: function(){
       return $http.get('Server/getExtras.php')
       .then(function(response){
-        return response.data;
+        var arrayData = [];
+        response.data.forEach(d => {
+          arrayData.push({'list': [d[Object.keys(d)[0]]],'name':Object.keys(d)[0]});
+        });
+        return arrayData;
       });
     }
   };
